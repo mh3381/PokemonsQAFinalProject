@@ -1,5 +1,7 @@
 package com.qa.pokemons.domain;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -75,6 +77,24 @@ import javax.validation.constraints.NotNull;
 			this.name = name;
 			this.colour = colour;
 			this.power = power;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(colour, name, pokemonId, power);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Pokemon other = (Pokemon) obj;
+			return Objects.equals(colour, other.colour) && Objects.equals(name, other.name)
+					&& pokemonId == other.pokemonId && power == other.power;
 		}
 		
 		
