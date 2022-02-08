@@ -1,7 +1,6 @@
 package com.qa.pokemons.domain;
 
 import javax.persistence.Column;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,16 +10,10 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-
-
-
-
-@AllArgsConstructor
 @Entity	
 @Table(name = "pokemon")
-		public class Pokemon {
-		
+	public class Pokemon {
+
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column
@@ -38,15 +31,7 @@ import lombok.AllArgsConstructor;
 		@Column
 		private int power;
 		
-		@Column
-		private String type;
 		
-		@Column
-		private int damage;
-		
-		@Column
-		private boolean magical;
-}
 		public int getPokemonId() {
 			return pokemonId;
 		}
@@ -78,28 +63,19 @@ import lombok.AllArgsConstructor;
 		public void setPower(int power) {
 			this.power = power;
 		}
-		
-		public String getType() {
-			return type;
+	
+		public Pokemon() {
+			
 		}
 		
-		public void setType(String type) {
-			this.type = type;
+		public Pokemon(int pokemonId, String name, String colour,
+				 int power) {
+			
+			this.pokemonId = pokemonId;
+			this.name = name;
+			this.colour = colour;
+			this.power = power;
 		}
 		
-		public int getDamage() {
-			return damage;
-		}
 		
-		public void setDamage(int damage) {
-			this.damage = damage;
-		}
-		
-		public boolean isMagical() {
-			return magical;
-		}
-		
-		public void setMagical(boolean magical) {
-			this.magical = magical;
-}
 }
