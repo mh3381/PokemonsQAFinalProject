@@ -96,6 +96,12 @@ import javax.validation.constraints.NotNull;
 			return Objects.equals(colour, other.colour) && Objects.equals(name, other.name)
 					&& pokemonId == other.pokemonId && power == other.power;
 		}
+
+		@Override
+		public String toString() {
+			return "Pokemon [pokemonId=" + pokemonId + ", name=" + name + ", colour=" + colour + ", power=" + power
+					+ "]";
+		}
 		
 		
 }
