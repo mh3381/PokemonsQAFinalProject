@@ -70,6 +70,11 @@ import javax.validation.constraints.NotNull;
 			
 		}
 		
+		public Pokemon(String name, String colour,
+				 int power) {
+			
+		}
+		
 		public Pokemon(int pokemonId, String name, String colour,
 				 int power) {
 			
