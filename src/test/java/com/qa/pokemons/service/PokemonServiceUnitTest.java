@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -50,4 +51,24 @@ public class PokemonServiceUnitTest {
 		Mockito.verify(this.repo, Mockito.times(1)).findAll();
 		
 	}
+	//READ
+	
+	@Test
+	public void readPokemonById() {
+		
+		int validId = 5;
+		int invalidId = 222;
+		
+		Pokemon testInput = new Pokemon(1, "Bob", "Blue", 999);
+		Pokemon mockInput = new Pokemon(1, "Bob", "Blue", 999);
+
+		Optional<Pokemon> validPokemon = Optional.ofNullable(new Pokemon(1, "Bob", "Blue", 999));
+				
+		Mockito.when(this.repo.findById(validId)).thenReturn(validPokemon);
+		
+		assertEquals(validPokemon.get(), this.service.readById(validId));
+		
+		Mockito.verify(this.repo, Mockito.times(1)).findById(validId);
+	
+}
 }

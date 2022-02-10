@@ -42,7 +42,7 @@ public class PokemonController {
 	}
 
 	@GetMapping("/getById/{pokemonId}")
-	public ResponseEntity<?> getPlayer(@PathVariable Optional<Integer> pokemonId) {
+	public ResponseEntity<?> getPokemon(@PathVariable Optional<Integer> pokemonId) {
 		if (pokemonId.isPresent()) {
 			return new ResponseEntity<Pokemon>(creatures.get(pokemonId.get()), HttpStatus.FOUND);
 
@@ -53,8 +53,8 @@ public class PokemonController {
 	}
 
 	@PutMapping("/updateById/{pokemonId}")
-	public ResponseEntity<?> putPokemon(@PathVariable int pokemonId, @RequestBody Pokemon pokemon) {
-		return new ResponseEntity<Pokemon>(this.service.update(pokemonId, pokemon), HttpStatus.OK);
+	public ResponseEntity<?> putPokemon(@PathVariable int pokemonId, @RequestBody Pokemon Pokemon) {
+		return new ResponseEntity<Pokemon>(this.service.update(pokemonId, Pokemon), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/deleteById/{pokemonId}")
