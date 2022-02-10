@@ -3,6 +3,9 @@ package com.qa.pokemons.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +24,30 @@ public class PokemonServiceUnitTest {
 	@MockBean
 	private PokemonRepo repo;
 	
-	
+	// CREATE TEST
 	@Test
 	public void createTest() {
 		Pokemon testInput = new Pokemon(1, "Bob", "Blue", 999);
 		Pokemon mockInput = new Pokemon(1, "Bob", "Blue", 999);
 		
+		// CREATE TEST
 		Mockito.when(this.service.create(testInput)).thenReturn(mockInput);
 		
 		assertEquals(mockInput, this.service.create(testInput));
 		
 		Mockito.verify(this.repo, Mockito.times(1)).save(testInput);
 	}
-
+	
+	//READ ALL
+	@Test
+	public void readAllTest() {
+		List<Pokemon> mockInput = new ArrayList<Pokemon>();
+		
+		mockInput.add(new Pokemon(1, "Bob", "Blue", 999));
+		
+		Mockito.when(this.repo.findAll()).thenReturn(mockInput);
+		assertEquals(mockInput, this.service.readAll());
+		Mockito.verify(this.repo, Mockito.times(1)).findAll();
+		
+	}
 }

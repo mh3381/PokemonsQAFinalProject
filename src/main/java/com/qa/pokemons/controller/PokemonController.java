@@ -3,6 +3,7 @@ package com.qa.pokemons.controller;
 import java.util.ArrayList;
 
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,11 @@ public class PokemonController {
 	public ResponseEntity<Pokemon> createPokemon(@RequestBody Pokemon pokemon) {
 		 creatures.add(pokemon);
 		return new ResponseEntity<Pokemon>(this.service.create(pokemon), HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/getAll")
+	public ResponseEntity<List<Pokemon>> readAllPokemon() {
+		return new ResponseEntity<List<Pokemon>>(this.service.readAll(), HttpStatus.FOUND);
 	}
 
 	@GetMapping("/getById/{pokemonId}")
