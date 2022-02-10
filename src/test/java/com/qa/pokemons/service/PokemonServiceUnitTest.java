@@ -54,7 +54,7 @@ public class PokemonServiceUnitTest {
 	//READ
 	
 	@Test
-	public void readPokemonById() {
+	public void readById() {
 		
 		int validId = 5;
 		int invalidId = 222;
@@ -71,4 +71,18 @@ public class PokemonServiceUnitTest {
 		Mockito.verify(this.repo, Mockito.times(1)).findById(validId);
 	
 }
+	@Test
+	public void deleteById() {
+		
+		int invalidId = 66;
+		
+		Mockito.when(this.repo.existsById(invalidId)).thenReturn(false);
+		
+		assertEquals(true, this.service.delete(invalidId));
+		
+		Mockito.verify(this.repo).deleteById(invalidId);
+		
+	}
 }
+	
+	

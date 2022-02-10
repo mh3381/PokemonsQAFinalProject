@@ -3,6 +3,7 @@ package com.qa.pokemons.service;
 import java.util.List;
 
 
+
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -54,14 +55,9 @@ public class PokemonService implements CRUDServiceInterface<Pokemon>  {
 
 	@Override
 	public boolean delete(int pokemonId) {
-		boolean deleted = false;
-	      Optional<Pokemon> optionalPokemon = this.repo.findById(pokemonId);
-	      if (optionalPokemon.isPresent()) {
-	          this.repo.deleteById(pokemonId);
-	          deleted = true;
-	          return deleted;
-	       }
-	       return deleted;
+		
+		this.repo.deleteById(pokemonId);
+		return !this.repo.existsById(pokemonId);
 	}
 
 }
