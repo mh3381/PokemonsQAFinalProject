@@ -80,9 +80,10 @@ public class Pokemon {
 		}
 
 		
+
 		@Override
 		public int hashCode() {
-			return Objects.hash(colour, id, name, power);
+			return Objects.hash(colour, name, power);
 		}
 
 		@Override
@@ -94,8 +95,8 @@ public class Pokemon {
 			if (getClass() != obj.getClass())
 				return false;
 			Pokemon other = (Pokemon) obj;
-			return Objects.equals(colour, other.colour) && Objects.equals(id, other.id)
-					&& Objects.equals(name, other.name) && Objects.equals(power, other.power);
+			return Objects.equals(colour, other.colour) && Objects.equals(name, other.name)
+					&& Objects.equals(power, other.power);
 		}
 
 		@Override
@@ -103,7 +104,6 @@ public class Pokemon {
 			return "Pokemon [id=" + id + ", name=" + name + ", colour=" + colour + ", power=" + power + "]";
 		}
 
-		
 		
 		
 		
