@@ -1,60 +1,50 @@
 package com.qa.pokemons.controller;
 
-import java.util.ArrayList;
-
-
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.qa.pokemons.domain.Pokemon;
 import com.qa.pokemons.service.PokemonService;
 
+import java.util.List;
+
 @RestController
-//@RequestMapping("/pokemons")
+@RequestMapping("/pokemon")
 public class PokemonController {
-	private PokemonService service;
-	 public List<Pokemon> creatures = new ArrayList<Pokemon>();
 
-	public PokemonController(PokemonService service) {
-		this.service = service;
-	}
+    private final PokemonService service;
 
-	@PostMapping("/create/pokemon")
-	public ResponseEntity<Pokemon> createPokemon(@RequestBody Pokemon pokemon) {
-		 creatures.add(pokemon);
-		return new ResponseEntity<Pokemon>(this.service.create(pokemon), HttpStatus.CREATED);
-	}
+    public PokemonController(PokemonService service) {
+        super();
+        this.service = service;
+    }
 
-	@GetMapping("/getById/{pokemonId}")
-	public ResponseEntity<?> getPlayer(@PathVariable Optional<Integer> pokemonId) {
-		if (pokemonId.isPresent()) {
-			return new ResponseEntity<Pokemon>(creatures.get(pokemonId.get()), HttpStatus.FOUND);
+    @PostMapping
+    public ResponseEntity<Pokemon> add(@RequestBody Pokemon pokemon) {
+        this.service.create(pokemon);
+        return new ResponseEntity<Pokemon>(pokemon, HttpStatus.ACCEPTED);
+    }
 
-		} else {
-			return new ResponseEntity<List<Pokemon>>(creatures, HttpStatus.NOT_FOUND);
-		}
+    @GetMapping
+    public ResponseEntity<List> readAll() {
+        return new ResponseEntity<List>(this.service.readAll(), HttpStatus.ACCEPTED);
+    }
 
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<Pokemon> getById(@PathVariable("id") Long id) {
+        return new ResponseEntity<Pokemon>(this.service.getById(id), HttpStatus.ACCEPTED);
+    }
 
-	@PutMapping("/updateById/{pokemonId}")
-	public ResponseEntity<?> putPokemon(@PathVariable int pokemonId, @RequestBody Pokemon pokemon) {
-		return new ResponseEntity<Pokemon>(this.service.update(pokemonId, pokemon), HttpStatus.OK);
-	}
+    @PutMapping("/{id}")
+    public ResponseEntity<Pokemon> updateById(@PathVariable("id") Long id, @RequestBody Pokemon pokemon) {
+        return new ResponseEntity<Pokemon>(this.service.updateById(id, pokemon), HttpStatus.ACCEPTED);
+    }
 
-	@DeleteMapping("/deleteById/{pokemonId}")
-	public ResponseEntity<Boolean> deletePokemon(@PathVariable int pokemonId) {
-		boolean deleted = this.service.delete(pokemonId);
-		return (deleted) ? new ResponseEntity<Boolean>(deleted, HttpStatus.OK)
-				: new ResponseEntity<Boolean>(deleted, HttpStatus.NOT_FOUND);
-	}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Pokemon> deleteById(@PathVariable("id") Long id) {
+        return new ResponseEntity<Pokemon>(this.service.deleteById(id), HttpStatus.ACCEPTED);
+    }
+
 }

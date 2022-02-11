@@ -1,10 +1,9 @@
-CREATE DATABASE IF NOT EXISTS pokemonDB;
+drop table if exists `pokemon` CASCADE;
 
-DROP TABLE IF EXISTS pokemon CASCADE;
-CREATE TABLE 'pokemon' (
-	id BIGINT AUTO_INCREMENT, 
-	'name' VARCHAR(50) NOT NULL,
-	'colour' VARCHAR(50),
-	'power' SMALLINT(3) NOT NULL,
-	PRIMARY KEY ('id')
-	);
+create table pokemon (
+id BIGINT not null AUTO_INCREMENT, 
+colour varchar(255), 
+name varchar(255), 
+power BIGINT, 
+primary key (id)
+);

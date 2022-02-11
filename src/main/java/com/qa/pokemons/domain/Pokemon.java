@@ -2,15 +2,11 @@ package com.qa.pokemons.domain;
 
 import java.util.Objects;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 @Entity	
 public class Pokemon {
@@ -18,27 +14,24 @@ public class Pokemon {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column
-		private int pokemonId;
+		private Long id;
 		
 		@Column
-		@NotNull(message = "Name must be entered")
 		private String name;
 		
 		@Column
 		private String colour;
 		
-		@Min(1)
-		@Max(999)
 		@Column
-		private int power;
+		private Long power;
 		
 		
-		public int getPokemonId() {
-			return pokemonId;
+		public Long getId() {
+			return id;
 		}
 		
-		public void setPokemonId(int pokemonId) {
-			this.pokemonId = pokemonId;
+		public void setId(Long id) {
+			this.id = id;
 		}
 		
 		public String getName() {
@@ -57,35 +50,39 @@ public class Pokemon {
 			this.colour = colour;
 		}
 		
-		public int getPower() {
+		public  Long getPower() {
 			return power;
 		}
 		
-		public void setPower(int power) {
+		public void setPower(Long power) {
 			this.power = power;
 		}
 	
 		public Pokemon() {
 			
 		}
+	
 		
-		public Pokemon(String name, String colour,
-				 int power) {
-			
-		}
-		
-		public Pokemon(int pokemonId, String name, String colour,
-				 int power) {
-			
-			this.pokemonId = pokemonId;
+		public Pokemon(String name, String colour, Long power) {
+			super();
 			this.name = name;
 			this.colour = colour;
 			this.power = power;
 		}
 
+		public Pokemon(Long id, String name, String colour,
+				 Long power) {
+			
+			this.id = id;
+			this.name = name;
+			this.colour = colour;
+			this.power = power;
+		}
+
+		
 		@Override
 		public int hashCode() {
-			return Objects.hash(colour, name, pokemonId, power);
+			return Objects.hash(colour, id, name, power);
 		}
 
 		@Override
@@ -97,15 +94,17 @@ public class Pokemon {
 			if (getClass() != obj.getClass())
 				return false;
 			Pokemon other = (Pokemon) obj;
-			return Objects.equals(colour, other.colour) && Objects.equals(name, other.name)
-					&& pokemonId == other.pokemonId && power == other.power;
+			return Objects.equals(colour, other.colour) && Objects.equals(id, other.id)
+					&& Objects.equals(name, other.name) && Objects.equals(power, other.power);
 		}
 
 		@Override
 		public String toString() {
-			return "Pokemon [pokemonId=" + pokemonId + ", name=" + name + ", colour=" + colour + ", power=" + power
-					+ "]";
+			return "Pokemon [id=" + id + ", name=" + name + ", colour=" + colour + ", power=" + power + "]";
 		}
+
+		
+		
 		
 		
 }

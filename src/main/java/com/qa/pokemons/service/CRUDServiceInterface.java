@@ -8,9 +8,9 @@ public interface CRUDServiceInterface<T> {
 
     List<T> readAll();
 
-    T readById(int pokemonId);
+    T getById(Long id);
 
-    T update(int pokemonId, T t);
+    T updateById(Long id, T t);
 
-    boolean delete(int pokemon);
+    T deleteById(Long id);
 }
