@@ -1,0 +1,1 @@
+INSERT INTO `pokemon` (`name`,`colour`,`power`) VALUES('Jackie', 'Ping', 400);
