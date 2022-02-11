@@ -4,6 +4,8 @@ import java.util.List;
 
 
 
+
+
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -35,13 +37,13 @@ public class PokemonService implements CRUDServiceInterface<Pokemon>  {
 	@Override
 	public Pokemon readById(int pokemonId) {
 		Optional<Pokemon> optionalPokemon = this.repo.findById(pokemonId);
-        return optionalPokemon.get();
+        return optionalPokemon.orElse(null);
 		
 	}
 
 	@Override
 	public Pokemon update(int pokemonId, Pokemon updatedPokemon) {
-		 Optional<Pokemon> optionalPokemon = this.repo.findById(pokemonId);
+		Optional<Pokemon> optionalPokemon = this.repo.findById(pokemonId);
 	        if (optionalPokemon.isPresent()) {
 	            Pokemon existingPokemon = optionalPokemon.get();
 	            existingPokemon.setPokemonId(updatedPokemon.getPokemonId());
@@ -50,7 +52,8 @@ public class PokemonService implements CRUDServiceInterface<Pokemon>  {
 	            existingPokemon.setPower(updatedPokemon.getPower());
 	            return existingPokemon;
 	        }
-		return null;
+			return null;
+		
 	}
 
 	@Override

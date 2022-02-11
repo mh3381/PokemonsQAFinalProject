@@ -1,6 +1,10 @@
 package com.qa.pokemons.service;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+
+
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -12,11 +16,13 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.qa.pokemons.domain.Pokemon;
 import com.qa.pokemons.repo.PokemonRepo;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class PokemonServiceUnitTest {
 	
 	@Autowired
@@ -51,10 +57,10 @@ public class PokemonServiceUnitTest {
 		Mockito.verify(this.repo, Mockito.times(1)).findAll();
 		
 	}
-	//READ
+	//READ BY ID
 	
 	@Test
-	public void readById() {
+	public void readByIdTest() {
 		
 		int validId = 5;
 		int invalidId = 222;
@@ -70,9 +76,32 @@ public class PokemonServiceUnitTest {
 		
 		Mockito.verify(this.repo, Mockito.times(1)).findById(validId);
 	
-}
+	}
+	
+	
+	//UPDATE
+	
 	@Test
-	public void deleteById() {
+	public void updateTest() {
+		
+		int id = 1;
+		
+		Pokemon toUpdate = new Pokemon(1, "Bob", "Blue", 999);
+		Optional<Pokemon> optPokemon = Optional.of(new Pokemon(id, null, null, 0));
+		Pokemon updated = new Pokemon(toUpdate.getPokemonId(), toUpdate.getName(), toUpdate.getColour(), toUpdate.getPower());
+		
+		Mockito.when(this.repo.findById(id)).thenReturn(optPokemon);
+		Mockito.when(this.repo.save(updated)).thenReturn(updated);
+		
+		assertThat(this.service.update(id, toUpdate)).isEqualTo(updated);
+		
+		Mockito.verify(this.repo, Mockito.times(1)).save(updated);
+		Mockito.verify(this.repo, Mockito.times(1)).existsById(id);
+
+	}
+	//DELETE BY ID
+	@Test
+	public void deleteByIdTest() {
 		
 		int invalidId = 66;
 		

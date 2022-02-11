@@ -3,15 +3,11 @@ package com.qa.pokemons.domain;
 import java.util.Objects;
 
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 @Entity	
 public class Pokemon {
@@ -22,14 +18,11 @@ public class Pokemon {
 		private int pokemonId;
 		
 		@Column
-		@NotNull(message = "Name must be entered")
 		private String name;
 		
 		@Column
 		private String colour;
 		
-		@Min(1)
-		@Max(999)
 		@Column
 		private int power;
 		
