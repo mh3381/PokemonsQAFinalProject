@@ -2,6 +2,7 @@ package com.qa.pokemons.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -32,7 +33,7 @@ import com.qa.pokemons.domain.Pokemon;
 @ActiveProfiles("test")
 public class PokemonControllerTest {
 	
-	 @Autowired
+	 	@Autowired
 	    private MockMvc mock;
 
 	    @Autowired
@@ -53,59 +54,62 @@ public class PokemonControllerTest {
 	    
 	    @Test 
 	    void testCreateCont() throws Exception {
+	   
 	    	String newPokemonJSON = this.map.writeValueAsString(createPokemon);
-	    	RequestBuilder mockRequest = post("/").contentType(MediaType.APPLICATION_JSON).content(newPokemonJSON);
+	    	RequestBuilder mockRequest = post("/pokemon").contentType(MediaType.APPLICATION_JSON).content(newPokemonJSON);
 	    	String savedPokemonJSON = this.map.writeValueAsString(getPokemon);
 	    	
 	    	ResultMatcher matchStatus = status().isAccepted();
 	    	ResultMatcher matchBody = content().json(savedPokemonJSON);
 	    	
-	    	this.mock.perform(mockRequest).andExpect(matchStatus);
+	    	this.mock.perform(mockRequest).andExpect(matchStatus).andExpect(matchBody);
+	    	System.out.println(newPokemonJSON);
+	    	System.out.println(savedPokemonJSON);
 	    }
 	    
 	    @Test
 	    void testReadAll() throws Exception {
 	        List<Pokemon> allPokemons = List.of(schemaPokemon);
 	        String allPokemonsJSON = this.map.writeValueAsString(allPokemons);
-	        RequestBuilder readReq = get("/");
+	        RequestBuilder readReq = get("/pokemon");
 
 	        ResultMatcher matchStatus = status().isAccepted();
 	        ResultMatcher matchBody = content().json(allPokemonsJSON);
 
-	        this.mock.perform(readReq).andExpect(matchStatus);
+	        this.mock.perform(readReq).andExpect(matchStatus).andExpect(matchBody);
 }
 	    
 	    @Test
 	    void testReadOne() throws Exception {
 	        String schemaPokemonJSON = this.map.writeValueAsString(schemaPokemon);
-	        RequestBuilder readReq = get("/" + schemaPokemon.getId());
+	        RequestBuilder readReq = get("/pokemon" + schemaPokemon.getId());
 
 	        ResultMatcher matchStatus = status().isAccepted();
 	        ResultMatcher matchBody = content().json(schemaPokemonJSON);
 
-	        this.mock.perform(readReq).andExpect(matchStatus);
+	        this.mock.perform(readReq).andExpect(matchStatus).andExpect(matchBody);
 	    }
 	    
 	    @Test
 	    void testUpdate() throws Exception {
 	        String updatePokemonJSON = this.map.writeValueAsString(updatePokemon);
-	        RequestBuilder updateReq = put("/" + schemaPokemon.getId()).contentType(MediaType.APPLICATION_JSON).content(updatePokemonJSON);
+	        RequestBuilder updateReq = put("/pokemon" + schemaPokemon.getId()).contentType(MediaType.APPLICATION_JSON).content(updatePokemonJSON);
 
 	        ResultMatcher matchStatus = status().isAccepted();
 	        ResultMatcher matchBody = content().json(updatePokemonJSON);
 
-	        this.mock.perform(updateReq).andExpect(matchStatus);
+	        this.mock.perform(updateReq).andExpect(matchStatus).andExpect(matchBody);
 	    }
 	    
 	    @Test
 	    void testDelete() throws Exception {
 	        String schemaPokemonJSON = this.map.writeValueAsString(schemaPokemon);
-	        RequestBuilder updateReq = delete("/" + schemaPokemon.getId());
+	        RequestBuilder updateReq = delete("/pokemon" + schemaPokemon.getId());
 
 	        ResultMatcher matchStatus = status().isAccepted();
 	        ResultMatcher matchBody = content().json(schemaPokemonJSON);
 
-	        this.mock.perform(updateReq).andExpect(matchStatus);
+	        this.mock.perform(updateReq).andExpect(matchStatus).andExpect(matchBody);
 }
 
 }

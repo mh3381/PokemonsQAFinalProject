@@ -12,5 +12,5 @@ public interface CRUDServiceInterface<T> {
 
     T updateById(Long id, T t);
 
-    T  deleteById(Long id);
+    T deleteById(Long id);
 }

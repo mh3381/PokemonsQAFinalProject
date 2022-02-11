@@ -11,7 +11,7 @@ import com.qa.pokemons.service.PokemonService;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/pokemon")
 public class PokemonController {
 
     private final PokemonService service;

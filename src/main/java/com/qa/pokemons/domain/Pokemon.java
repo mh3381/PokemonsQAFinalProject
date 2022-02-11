@@ -61,12 +61,15 @@ public class Pokemon {
 		public Pokemon() {
 			
 		}
+	
 		
-		public Pokemon(String name, String colour,
-				 Long power) {
-			
+		public Pokemon(String name, String colour, Long power) {
+			super();
+			this.name = name;
+			this.colour = colour;
+			this.power = power;
 		}
-		
+
 		public Pokemon(Long id, String name, String colour,
 				 Long power) {
 			
