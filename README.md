@@ -24,10 +24,10 @@
 ### SQL
 ![database](https://user-images.githubusercontent.com/90289639/153614797-3613bef1-8278-4137-be37-331adfaaeeb7.jpg)
 
-### Risk Assessment
-
 
 ### ERD
+![image](https://user-images.githubusercontent.com/90289639/153615469-f098e6d5-44c7-48de-8256-e16b14539b75.png)
 
 
 ### Jira
+https://qaproject202.atlassian.net/jira/software/projects/POK/boards/4/roadmap?shared=&atlOrigin=eyJpIjoiOTY4OTU1ZmNjZDZmNGI3OGI1MmUxMGUyMGFmYmZlODYiLCJwIjoiaiJ9
