@@ -2,16 +2,16 @@ package com.qa.pokemons.service;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-
-
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,93 +25,58 @@ import com.qa.pokemons.repo.PokemonRepo;
 @ActiveProfiles("test")
 public class PokemonServiceUnitTest {
 	
-	@Autowired
+	private Pokemon newPokemon;
+	private Pokemon savedPokemon;
+	
+	@InjectMocks
 	private PokemonService service;
 	
-	@MockBean
+	@Mock
 	private PokemonRepo repo;
 	
-	// CREATE TEST
-	@Test
-	public void createTest() {
-		Pokemon testInput = new Pokemon(1, "Bob", "Blue", 999);
-		Pokemon mockInput = new Pokemon(1, "Bob", "Blue", 999);
-		
-		// CREATE TEST
-		Mockito.when(this.service.create(testInput)).thenReturn(mockInput);
-		
-		assertEquals(mockInput, this.service.create(testInput));
-		
-		Mockito.verify(this.repo, Mockito.times(1)).save(testInput);
-	}
-	
-	//READ ALL
-	@Test
-	public void readAllTest() {
-		List<Pokemon> mockInput = new ArrayList<Pokemon>();
-		
-		mockInput.add(new Pokemon(1, "Bob", "Blue", 999));
-		
-		Mockito.when(this.repo.findAll()).thenReturn(mockInput);
-		assertEquals(mockInput, this.service.readAll());
-		Mockito.verify(this.repo, Mockito.times(1)).findAll();
+	@BeforeEach
+	public void setUp() {
+		newPokemon = new Pokemon(1L,"Jackie", "Magenta", 884L);
+		savedPokemon = new Pokemon(1L, "Jackie", "Magenta", 884L);
 		
 	}
-	//READ BY ID
 	
 	@Test
-	public void readByIdTest() {
-		
-		int validId = 5;
-		int invalidId = 222;
-		
-		Pokemon testInput = new Pokemon(1, "Bob", "Blue", 999);
-		Pokemon mockInput = new Pokemon(1, "Bob", "Blue", 999);
+	public void testAdd() {
+		Mockito.when(this.repo.save(newPokemon)).thenReturn(savedPokemon);
+        assertEquals(savedPokemon, this.service.create(newPokemon));
+        Mockito.verify(this.repo, Mockito.times(1)).save(newPokemon);
+    }
 
-		Optional<Pokemon> validPokemon = Optional.ofNullable(new Pokemon(1, "Bob", "Blue", 999));
-				
-		Mockito.when(this.repo.findById(validId)).thenReturn(validPokemon);
-		
-		assertEquals(validPokemon.get(), this.service.readById(validId));
-		
-		Mockito.verify(this.repo, Mockito.times(1)).findById(validId);
-	
-	}
-	
-	
-	//UPDATE
-	
-	@Test
-	public void updateTest() {
-		
-		int id = 1;
-		
-		Pokemon toUpdate = new Pokemon(1, "Bob", "Blue", 999);
-		Optional<Pokemon> optPokemon = Optional.of(new Pokemon(id, null, null, 0));
-		Pokemon updated = new Pokemon(toUpdate.getPokemonId(), toUpdate.getName(), toUpdate.getColour(), toUpdate.getPower());
-		
-		Mockito.when(this.repo.findById(id)).thenReturn(optPokemon);
-		Mockito.when(this.repo.save(updated)).thenReturn(updated);
-		
-		assertThat(this.service.update(id, toUpdate)).isEqualTo(updated);
-		
-		Mockito.verify(this.repo, Mockito.times(1)).save(updated);
-		Mockito.verify(this.repo, Mockito.times(1)).existsById(id);
+    @Test
+    public void testGetAll() {
+        Mockito.when(this.repo.findAll()).thenReturn(List.of(savedPokemon));
+        assertEquals(List.of(savedPokemon), this.service.readAll());
+        Mockito.verify(this.repo, Mockito.times(1)).findAll();
+    }
 
-	}
-	//DELETE BY ID
-	@Test
-	public void deleteByIdTest() {
-		
-		int invalidId = 66;
-		
-		Mockito.when(this.repo.existsById(invalidId)).thenReturn(false);
-		
-		assertEquals(true, this.service.delete(invalidId));
-		
-		Mockito.verify(this.repo).deleteById(invalidId);
-		
-	}
+    @Test
+    public void testGetById() {
+        Mockito.when(this.repo.findById(savedPokemon.getId())).thenReturn(Optional.ofNullable(savedPokemon));
+        assertEquals(savedPokemon, this.service.getById(savedPokemon.getId()));
+        Mockito.verify(this.repo, Mockito.times(1)).findById(savedPokemon.getId());
+    }
+
+    @Test
+    public void updateById() {
+        Mockito.when(this.repo.findById(savedPokemon.getId())).thenReturn(Optional.ofNullable(savedPokemon));
+        Mockito.when(this.repo.save(newPokemon)).thenReturn(savedPokemon);
+        assertEquals(savedPokemon, this.service.updateById(savedPokemon.getId(), newPokemon));
+        Mockito.verify(this.repo, Mockito.times(1)).findById(savedPokemon.getId());
+        Mockito.verify(this.repo, Mockito.times(1)).save(newPokemon);
+    }
+
+    @Test
+    public void deleteById() {
+        Mockito.when(this.repo.findById(savedPokemon.getId())).thenReturn(Optional.ofNullable(savedPokemon));
+        assertEquals(savedPokemon, this.service.deleteById(savedPokemon.getId()));
+        Mockito.verify(this.repo, Mockito.times(1)).findById(savedPokemon.getId());
+    }
+	
 }
-	
 	

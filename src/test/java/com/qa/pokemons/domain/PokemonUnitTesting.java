@@ -1,35 +1,40 @@
 package com.qa.pokemons.domain;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import static org.junit.Assert.assertEquals;
-
-
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
+@SpringBootTest
+@ActiveProfiles("test")
 public class PokemonUnitTesting {
 	
-	@Test
-	public void testConstructorWithId() {
-		Pokemon pokemon = new Pokemon(1, "Bob", "Blue", 999);
+	private Pokemon newPokemon;
 	
-	assertNotNull(pokemon.getPokemonId());
-	assertNotNull(pokemon.getName());
-	assertNotNull(pokemon.getColour());
-	assertNotNull(pokemon.getPower());
-	
-	
-	assertEquals(1, pokemon.getPokemonId());
-	assertEquals("Bob", pokemon.getName());
-	assertEquals("Blue", pokemon.getColour());
-	assertEquals(999, pokemon.getPower());
-	
+	@BeforeEach
+	public void setUp() {
+		newPokemon = new Pokemon(1L, "Bob", "Blue", 999L);
 	}
-	
-	@Test
-	public void testToString() {
-		Pokemon pokemon = new Pokemon(1, "Bob", "Blue", 999);
-		
-		assertEquals("Pokemon [pokemonId=1, name=Bob, colour=Blue, power=999]", pokemon.toString());
-	}
+    
+
+    @Test
+    public void testConstructorName() {
+        assertEquals("Bob", newPokemon.getName());
+    }
+
+    @Test
+    public void testToString() {
+    	Pokemon newPokemon = new Pokemon();
+        assertEquals(newPokemon.toString(),"Pokemon[id=0, name=null, colour=null, power=0]");
+    }
+
+    @Test
+    public void testEquals() {
+        EqualsVerifier.forClass(Pokemon.class).usingGetClass().withPrefabValues(Pokemon.class, newPokemon, new Pokemon()).withNonnullFields("id").verify();
+
+    }
 }
